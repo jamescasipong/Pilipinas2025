@@ -165,7 +165,7 @@ export default function ChatbotPage() {
                       <span className="text-xs sm:text-sm font-normal text-ph-red">(Powered by Gemini)</span>
                     </CardTitle>
                     <CardDescription className="text-xs sm:text-sm">
-                      Ask questions about candidates, issues, or the election process
+                      Ask questions about candidates, issues, or the election process. Keep in mind that this is an AI assistant, so it may not always be accurate. There may be some questions that are not supported yet. Need more data to train it :)
                     </CardDescription>
                   </div>
                 </div>
