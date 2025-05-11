@@ -337,7 +337,7 @@ export default function Home() {
                   </li>
                   <li>
                     <Link href="/ballot" className="text-white/80 hover:text-ph-yellow">
-                      AI Assistant
+                      Ballot
                     </Link>
                   </li>
                 </ul>
