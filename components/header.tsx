@@ -78,6 +78,9 @@ export default function Header({mobileMenuOpen, setMobileMenuOpen}: any) {
                         >
                             AI Assistant
                         </Link>
+                        <Link href="/ballot" className="hover:text-yellow-200 text-ph-red font-medium" onClick={() => setMobileMenuOpen(false)}>
+                            My Ballot
+                        </Link>
                     </div>
                 </div>
             )}

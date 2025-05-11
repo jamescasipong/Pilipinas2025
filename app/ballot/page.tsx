@@ -394,6 +394,11 @@ export default function BallotPage() {
                                         AI Assistant
                                     </Link>
                                 </li>
+                                <li>
+                                    <Link href="/ballot" className="text-white/80 hover:text-ph-yellow">
+                                        Ballot
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
                         <div>
