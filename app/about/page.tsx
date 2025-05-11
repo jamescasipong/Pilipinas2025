@@ -2,6 +2,7 @@ import Link from "next/link"
 import { PhFlag } from "@/components/ph-flag"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 
 export default function AboutPage() {
   return (
@@ -322,10 +323,10 @@ export default function AboutPage() {
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-4">
-                <div className="h-16 w-16 rounded-full bg-ph-blue text-white flex items-center justify-center text-2xl font-bold">
-                  JC
-                </div>
-                <div>
+                <Avatar>
+                  <AvatarImage src="/profile.jpg" alt="@shadcn" />
+                  <AvatarFallback>JC</AvatarFallback>
+                </Avatar>                <div>
                   <p className="text-ph-blue font-semibold">James Casipong</p>
                   <p className="text-gray-600 text-sm">Software Engineer & Founder of PiliPinas 2025</p>
                   {/*<p className="text-gray-600 mt-2 text-sm">*/}
