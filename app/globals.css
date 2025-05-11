@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ph-red: #ce1126;
+  --ph-blue: #0038a8;
+  --ph-yellow: #fcd116;
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --primary: 221.2 83.2% 53.3%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 221.2 83.2% 53.3%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 217.2 91.2% 59.8%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 224.3 76.3% 48%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.ph-gradient {
+  background: linear-gradient(135deg, var(--ph-blue) 0%, var(--ph-red) 100%);
+}
+
+.ph-card {
+  border: 2px solid var(--ph-yellow);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.ph-button-primary {
+  background-color: var(--ph-red);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.ph-button-primary:hover {
+  background-color: #a50e1f;
+  transform: translateY(-2px);
+}
+
+.ph-button-secondary {
+  background-color: var(--ph-blue);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.ph-button-secondary:hover {
+  background-color: #002a80;
+  transform: translateY(-2px);
+}
+
+.ph-button-outline {
+  border: 2px solid var(--ph-yellow);
+  color: #333;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.ph-button-outline:hover {
+  background-color: var(--ph-yellow);
+  color: #333;
+  transform: translateY(-2px);
+}
+
+.ph-progress {
+  height: 8px;
+  border-radius: 4px;
+  background-color: #e5e5e5;
+  overflow: hidden;
+}
+
+.ph-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ph-blue), var(--ph-red));
+}
+
+.ph-star {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 0.9em;
+  margin-right: 0.9em;
+  margin-bottom: 1.2em;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0.7em solid var(--ph-yellow);
+  border-left: 0.3em solid transparent;
+  transform: rotate(35deg);
+}
+
+.ph-star:before {
+  content: "";
+  position: absolute;
+  height: 0;
+  width: 0;
+  top: -0.45em;
+  left: -0.65em;
+  border-bottom: 0.8em solid var(--ph-yellow);
+  border-left: 0.25em solid transparent;
+  border-right: 0.25em solid transparent;
+  transform: rotate(-35deg);
+}
+
+.ph-star:after {
+  content: "";
+  position: absolute;
+  top: 0.03em;
+  left: -1.05em;
+  height: 0;
+  width: 0;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0.7em solid var(--ph-yellow);
+  border-left: 0.3em solid transparent;
+  transform: rotate(-70deg);
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: var(--ph-yellow);
+  animation: confetti-fall 3s linear infinite;
+}
+
+.confetti:nth-child(2n) {
+  background-color: var(--ph-red);
+  animation-delay: 0.5s;
+}
+
+.confetti:nth-child(3n) {
+  background-color: var(--ph-blue);
+  animation-delay: 1s;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
