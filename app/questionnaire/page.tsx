@@ -131,7 +131,7 @@ export default function QuestionnairePage() {
 
         <div className="text-center text-gray-600 bg-white p-4 rounded-lg border-2 border-ph-yellow">
           <p>Your answers will be used to match you with candidates who share similar views.</p>
-          <p>We don't store your personal data or share your responses.</p>
+          <p>We don't store your personal data or share your responses. Please take note as this is not yet 100% accurate as the website is still under development.</p>
         </div>
       </div>
     </div>

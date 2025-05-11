@@ -47,10 +47,10 @@ export default function ResultsPage() {
   }, [searchParams])
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 py-12 px-4 md:px-6 relative">
+    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 py-12 px-0 md:px-6 relative">
       {showConfetti && <Confetti />}
 
-      <div className="container mx-auto max-w-5xl">
+      <div className="mx-auto max-w-5xl md:container px-4">
         <div className="flex items-center justify-center gap-3 mb-8">
           <PhFlag className="h-8 w-8" />
           <Link href="/" className="text-2xl font-bold text-ph-blue">

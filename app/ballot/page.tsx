@@ -1,0 +1,426 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { PhFlag } from "@/components/ph-flag"
+import { getAllCandidates } from "@/lib/candidates-data"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { getAllParties } from "@/lib/candidates-data"
+import { AlertCircle, CheckCircle2 } from "lucide-react"
+
+export default function BallotPage() {
+    const router = useRouter()
+    const candidates = getAllCandidates()
+    const parties = getAllParties()
+    const [selectedCandidates, setSelectedCandidates] = useState<string[]>([])
+    const [error, setError] = useState<string | null>(null)
+    const [success, setSuccess] = useState<string | null>(null)
+
+    // Reset error and success messages when selection changes
+    useEffect(() => {
+        setError(null)
+        setSuccess(null)
+    }, [selectedCandidates])
+
+    const handleCandidateToggle = (candidateId: string) => {
+        setSelectedCandidates((prev) => {
+            if (prev.includes(candidateId)) {
+                return prev.filter((id) => id !== candidateId)
+            } else {
+                // If already selected 12 candidates, show error
+                if (prev.length >= 12) {
+                    setError("You can only select up to 12 candidates. Please deselect one before adding another.")
+                    return prev
+                }
+                return [...prev, candidateId]
+            }
+        })
+    }
+
+    const handleSubmit = async () => {
+        if (selectedCandidates.length < 12) {
+            setError("Please select at least 12 candidates before submitting your ballot.")
+            return
+        }
+
+        try {
+            // Create a JWT token with the selected candidates
+            const response = await fetch("/api/ballot/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ selectedCandidates }),
+            })
+
+            if (!response.ok) {
+                throw new Error("Failed to create ballot")
+            }
+
+            const { token } = await response.json()
+
+            // Show success message
+            setSuccess("Your ballot has been created successfully!")
+
+            // Redirect to the share page with the token
+            setTimeout(() => {
+                router.push(`/ballot/share/${token}`)
+            }, 1500)
+        } catch (error) {
+            setError("An error occurred while creating your ballot. Please try again.")
+            console.error(error)
+        }
+    }
+
+    return (
+        <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
+            <header className="bg-white shadow-md border-b-4 border-ph-red">
+                <div className="container mx-auto py-4 px-4 md:px-6">
+                    <div className="flex justify-between items-center">
+                        <div className="flex items-center gap-2">
+                            <PhFlag className="h-8 w-8" />
+                            <Link href="/" className="text-2xl font-bold text-ph-blue">
+                                PiliPinas <span className="text-ph-red">2025</span>
+                            </Link>
+                        </div>
+                        <nav className="hidden md:flex space-x-4">
+                            <Link href="/" className="text-ph-blue hover:text-ph-red font-medium">
+                                Home
+                            </Link>
+                            <Link href="/about" className="text-ph-blue hover:text-ph-red font-medium">
+                                About
+                            </Link>
+                            <Link href="/candidates" className="text-ph-blue hover:text-ph-red font-medium">
+                                Candidates
+                            </Link>
+                            <Link href="/ballot" className="text-ph-red font-medium">
+                                My Ballot
+                            </Link>
+                        </nav>
+                        <Button className="md:hidden bg-ph-blue hover:bg-blue-800">Menu</Button>
+                    </div>
+                </div>
+            </header>
+
+            <main className="container mx-auto py-12 px-4 md:px-6">
+                <div className="max-w-5xl mx-auto">
+                    <div className="text-center mb-8">
+                        <h1 className="text-4xl font-bold text-ph-blue mb-2">
+                            Create Your <span className="text-ph-red">Ballot</span>
+                        </h1>
+                        <div className="h-1 w-32 bg-ph-yellow mx-auto mb-4 rounded-full"></div>
+                        <p className="text-gray-700 max-w-2xl mx-auto">
+                            Select at least 12 candidates you plan to vote for in the upcoming Senate election. You can then generate
+                            a shareable link, QR code, or save your selections as an image.
+                        </p>
+                    </div>
+
+                    {error && (
+                        <Alert variant="destructive" className="mb-6">
+                            <AlertCircle className="h-4 w-4" />
+                            <AlertTitle>Error</AlertTitle>
+                            <AlertDescription>{error}</AlertDescription>
+                        </Alert>
+                    )}
+
+                    {success && (
+                        <Alert className="mb-6 border-green-500 text-green-700 bg-green-50">
+                            <CheckCircle2 className="h-4 w-4" />
+                            <AlertTitle>Success</AlertTitle>
+                            <AlertDescription>{success}</AlertDescription>
+                        </Alert>
+                    )}
+
+                    <div className="bg-white p-4 rounded-lg border-2 border-ph-yellow shadow-lg mb-6">
+                        <div className="flex justify-between items-center">
+                            <h2 className="text-xl font-bold text-ph-blue">Selected Candidates: {selectedCandidates.length}/12</h2>
+                            <Button
+                                onClick={handleSubmit}
+                                disabled={selectedCandidates.length < 12}
+                                className="bg-ph-red hover:bg-red-700"
+                            >
+                                Generate Ballot
+                            </Button>
+                        </div>
+                        {selectedCandidates.length > 0 && (
+                            <div className="mt-4 flex flex-wrap gap-2">
+                                {selectedCandidates.map((id) => {
+                                    const candidate = candidates.find((c) => c.balotaNumber === id)
+                                    return (
+                                        <Badge key={id} className="bg-ph-blue text-white py-1 px-2">
+                                            {candidate?.balotaNumber}. {candidate?.lastName}
+                                            <button
+                                                onClick={() => handleCandidateToggle(id)}
+                                                className="ml-2 text-white hover:text-red-200"
+                                                aria-label={`Remove ${candidate?.lastName}`}
+                                            >
+                                                ✕
+                                            </button>
+                                        </Badge>
+                                    )
+                                })}
+                            </div>
+                        )}
+                    </div>
+
+                    <Tabs defaultValue="all" className="mb-8">
+                        <div className="flex justify-center mb-6">
+                            <TabsList className="bg-blue-50 p-1 border-2 border-ph-yellow">
+                                <TabsTrigger value="all" className="data-[state=active]:bg-ph-blue data-[state=active]:text-white">
+                                    All Candidates
+                                </TabsTrigger>
+                                {parties.slice(0, 5).map((party) => (
+                                    <TabsTrigger
+                                        key={party}
+                                        value={party}
+                                        className="data-[state=active]:bg-ph-red data-[state=active]:text-white"
+                                    >
+                                        {party}
+                                    </TabsTrigger>
+                                ))}
+                                <TabsTrigger
+                                    value="others"
+                                    className="data-[state=active]:bg-ph-yellow data-[state=active]:text-ph-blue"
+                                >
+                                    Others
+                                </TabsTrigger>
+                            </TabsList>
+                        </div>
+
+                        <TabsContent value="all" className="mt-0">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                {candidates.map((candidate) => (
+                                    <Card
+                                        key={candidate.balotaNumber}
+                                        className={`overflow-hidden border-2 hover:shadow-md transition-all ${
+                                            selectedCandidates.includes(candidate.balotaNumber)
+                                                ? "border-ph-red bg-red-50"
+                                                : "border-gray-200"
+                                        }`}
+                                    >
+                                        <CardHeader className="p-3 pb-0 flex flex-row items-start space-y-0 gap-2">
+                                            <Checkbox
+                                                id={`candidate-${candidate.balotaNumber}`}
+                                                checked={selectedCandidates.includes(candidate.balotaNumber)}
+                                                onCheckedChange={() => handleCandidateToggle(candidate.balotaNumber)}
+                                                className="data-[state=checked]:bg-ph-red data-[state=checked]:border-ph-red"
+                                            />
+                                            <div className="flex-1">
+                                                <CardTitle className="text-base font-bold flex items-center gap-1">
+                          <span className="bg-ph-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                            {candidate.balotaNumber}
+                          </span>
+                                                    {candidate.lastName}
+                                                </CardTitle>
+                                                <p className="text-xs text-gray-500">{candidate.fullName}</p>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent className="p-3 pt-2">
+                                            <div className="flex items-center">
+                                                <div className="w-12 h-12 rounded-full overflow-hidden mr-2">
+                                                    <img
+                                                        src={candidate.profileLink || "/placeholder.svg"}
+                                                        alt={candidate.fullName}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                                <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue text-xs">
+                                                    {candidate.party}
+                                                </Badge>
+                                            </div>
+                                        </CardContent>
+                                        <CardFooter className="p-3 pt-0 flex justify-end">
+                                            <Link
+                                                href={`/candidates/${candidate.balotaNumber}`}
+                                                className="text-xs text-ph-blue hover:text-ph-red"
+                                            >
+                                                View Profile →
+                                            </Link>
+                                        </CardFooter>
+                                    </Card>
+                                ))}
+                            </div>
+                        </TabsContent>
+
+                        {parties.slice(0, 5).map((party) => (
+                            <TabsContent key={party} value={party} className="mt-0">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                    {candidates
+                                        .filter((candidate) =>
+                                            candidate.partyList.toUpperCase().includes("IND")
+                                        )
+                                        .map((candidate) => (
+                                            <Card
+                                                key={candidate.balotaNumber}
+                                                className={`overflow-hidden border-2 hover:shadow-md transition-all ${
+                                                    selectedCandidates.includes(candidate.balotaNumber)
+                                                        ? "border-ph-red bg-red-50"
+                                                        : "border-gray-200"
+                                                }`}
+                                            >
+                                                <CardHeader className="p-3 pb-0 flex flex-row items-start space-y-0 gap-2">
+                                                    <Checkbox
+                                                        id={`candidate-${candidate.balotaNumber}`}
+                                                        checked={selectedCandidates.includes(candidate.balotaNumber)}
+                                                        onCheckedChange={() => handleCandidateToggle(candidate.balotaNumber)}
+                                                        className="data-[state=checked]:bg-ph-red data-[state=checked]:border-ph-red"
+                                                    />
+                                                    <div className="flex-1">
+                                                        <CardTitle className="text-base font-bold flex items-center gap-1">
+                              <span className="bg-ph-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                                {candidate.balotaNumber}
+                              </span>
+                                                            {candidate.lastName}
+                                                        </CardTitle>
+                                                        <p className="text-xs text-gray-500">{candidate.fullName}</p>
+                                                    </div>
+                                                </CardHeader>
+                                                <CardContent className="p-3 pt-2">
+                                                    <div className="flex items-center">
+                                                        <div className="w-12 h-12 rounded-full overflow-hidden mr-2">
+                                                            <img
+                                                                src={candidate.profileLink || "/placeholder.svg"}
+                                                                alt={candidate.fullName}
+                                                                className="w-full h-full object-cover"
+                                                            />
+                                                        </div>
+                                                        <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue text-xs">
+                                                            {candidate.party}
+                                                        </Badge>
+                                                    </div>
+                                                </CardContent>
+                                                <CardFooter className="p-3 pt-0 flex justify-end">
+                                                    <Link
+                                                        href={`/candidates/${candidate.balotaNumber}`}
+                                                        className="text-xs text-ph-blue hover:text-ph-red"
+                                                    >
+                                                        View Profile →
+                                                    </Link>
+                                                </CardFooter>
+                                            </Card>
+                                        ))}
+                                </div>
+                            </TabsContent>
+                        ))}
+
+                        <TabsContent value="others" className="mt-0">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                {candidates
+                                    .filter((candidate) =>
+                                        !candidate.partyList.toUpperCase().includes("IND")
+                                    )
+                                    .map((candidate) => (
+                                        <Card
+                                            key={candidate.balotaNumber}
+                                            className={`overflow-hidden border-2 hover:shadow-md transition-all ${
+                                                selectedCandidates.includes(candidate.balotaNumber)
+                                                    ? "border-ph-red bg-red-50"
+                                                    : "border-gray-200"
+                                            }`}
+                                        >
+                                            <CardHeader className="p-3 pb-0 flex flex-row items-start space-y-0 gap-2">
+                                                <Checkbox
+                                                    id={`candidate-${candidate.balotaNumber}`}
+                                                    checked={selectedCandidates.includes(candidate.balotaNumber)}
+                                                    onCheckedChange={() => handleCandidateToggle(candidate.balotaNumber)}
+                                                    className="data-[state=checked]:bg-ph-red data-[state=checked]:border-ph-red"
+                                                />
+                                                <div className="flex-1">
+                                                    <CardTitle className="text-base font-bold flex items-center gap-1">
+                            <span className="bg-ph-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                              {candidate.balotaNumber}
+                            </span>
+                                                        {candidate.lastName}
+                                                    </CardTitle>
+                                                    <p className="text-xs text-gray-500">{candidate.fullName}</p>
+                                                </div>
+                                            </CardHeader>
+                                            <CardContent className="p-3 pt-2">
+                                                <div className="flex items-center">
+                                                    <div className="w-12 h-12 rounded-full overflow-hidden mr-2">
+                                                        <img
+                                                            src={candidate.profileLink || "/placeholder.svg"}
+                                                            alt={candidate.fullName}
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    </div>
+                                                    <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue text-xs">
+                                                        {candidate.party}
+                                                    </Badge>
+                                                </div>
+                                            </CardContent>
+                                            <CardFooter className="p-3 pt-0 flex justify-end">
+                                                <Link
+                                                    href={`/candidates/${candidate.balotaNumber}`}
+                                                    className="text-xs text-ph-blue hover:text-ph-red"
+                                                >
+                                                    View Profile →
+                                                </Link>
+                                            </CardFooter>
+                                        </Card>
+                                    ))}
+                            </div>
+                        </TabsContent>
+                    </Tabs>
+                </div>
+            </main>
+
+            <footer className="bg-gradient-to-r from-ph-blue to-ph-red text-white py-12 px-4 md:px-6">
+                <div className="container mx-auto">
+                    <div className="grid md:grid-cols-3 gap-8">
+                        <div>
+                            <div className="flex items-center gap-2 mb-4">
+                                <PhFlag className="h-6 w-6" />
+                                <h3 className="text-xl font-bold">PiliPinas 2025</h3>
+                            </div>
+                            <p className="text-white/80">
+                                Helping voters make informed decisions by matching them with candidates who share their values.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-semibold mb-4 text-ph-yellow">Quick Links</h3>
+                            <ul className="space-y-2">
+                                <li>
+                                    <Link href="/" className="text-white/80 hover:text-ph-yellow">
+                                        Home
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/questionnaire" className="text-white/80 hover:text-ph-yellow">
+                                        Questionnaire
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/candidates" className="text-white/80 hover:text-ph-yellow">
+                                        Candidates
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href="/chatbot" className="text-white/80 hover:text-ph-yellow">
+                                        AI Assistant
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-semibold mb-4 text-ph-yellow">Disclaimer</h3>
+                            <p className="text-white/80">
+                                This tool is designed to help inform your voting decision, but should not be the only factor in your
+                                choice. Always research candidates thoroughly.
+                            </p>
+                        </div>
+                    </div>
+                    <div className="border-t border-white/20 mt-8 pt-8 text-center text-white/60">
+                        <p>&copy; {new Date().getFullYear()} PiliPinas 2025. All rights reserved.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    )
+}
