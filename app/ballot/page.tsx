@@ -15,6 +15,7 @@ import { getAllParties } from "@/lib/candidates-data"
 import { AlertCircle, CheckCircle2 } from "lucide-react"
 import Header from "@/components/header"
 import {toast} from "sonner";
+import { Input } from "@/components/ui/input"
 
 export default function BallotPage() {
     const router = useRouter()
@@ -25,6 +26,7 @@ export default function BallotPage() {
     const [success, setSuccess] = useState<string | null>(null)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [searchTerm, setSearchTerm] = useState("")
 
     // Reset error and success messages when selection changes
     useEffect(() => {
@@ -53,7 +55,6 @@ export default function BallotPage() {
             return
         }
 
-
         try {
             toast.loading("Creating ballot...")
 
@@ -77,9 +78,8 @@ export default function BallotPage() {
             setSuccess("Your ballot has been created successfully!")
             toast.dismiss()
 
-
             // Redirect to the share page with the token
-                router.push(`/ballot/share/${token}`)
+            router.push(`/ballot/share/${token}`)
 
             setLoading(false)
         } catch (error) {
@@ -92,9 +92,36 @@ export default function BallotPage() {
         }
     }
 
+    // Filter candidates based on search term
+    const filteredCandidates = candidates.filter(candidate =>
+        candidate.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        candidate.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        candidate.balotaNumber.includes(searchTerm)
+    )
+
+    // Filter candidates by party for the tabs
+    // const filterCandidatesByParty = (party: string) => {
+    //
+    //     console.log("party", party)
+    //
+    //     let partyCandidates = filteredCandidates.filter(candidate =>
+    //         candidate.partyList.toUpperCase().includes(party.toUpperCase())
+    //     )
+    //
+    //     if (party === "others") {
+    //         partyCandidates = filteredCandidates.filter(candidate =>
+    //             !parties.slice(0, 5).some(p =>
+    //                 candidate.partyList.toUpperCase().includes(p.toUpperCase())
+    //             )
+    //         )
+    //     }
+    //
+    //     return partyCandidates
+    // }
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
-            <Header></Header>
+            <Header mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen}></Header>
 
             <main className="container mx-auto py-12 px-4 md:px-6">
                 <div className="max-w-5xl mx-auto">
@@ -157,6 +184,17 @@ export default function BallotPage() {
                         )}
                     </div>
 
+                    {/* Search Input */}
+                    <div className="mb-6">
+                        <Input
+                            type="text"
+                            placeholder="Search candidates by name or ballot number..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full p-4 border-2 border-ph-yellow rounded-lg focus:ring-2 focus:ring-ph-blue focus:border-transparent"
+                        />
+                    </div>
+
                     <Tabs defaultValue="all" className="mb-8">
                         <div className="flex justify-center mb-6">
                             <TabsList className="bg-blue-50 p-1 border-2 border-ph-yellow">
@@ -183,7 +221,7 @@ export default function BallotPage() {
 
                         <TabsContent value="all" className="mt-0">
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                {candidates.map((candidate) => (
+                                {filteredCandidates.map((candidate) => (
                                     <Card
                                         key={candidate.balotaNumber}
                                         className={`overflow-hidden border-2 hover:shadow-md transition-all ${
@@ -233,77 +271,18 @@ export default function BallotPage() {
                                         </CardFooter>
                                     </Card>
                                 ))}
+                                {filteredCandidates.length === 0 && (
+                                    <div className="col-span-full text-center py-8">
+                                        <p className="text-gray-500">No candidates found matching your search.</p>
+                                    </div>
+                                )}
                             </div>
                         </TabsContent>
 
                         {parties.slice(0, 5).map((party) => (
                             <TabsContent key={party} value={party} className="mt-0">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                    {candidates
-                                        .filter((candidate) =>
-                                            candidate.partyList.toUpperCase().includes("IND")
-                                        )
-                                        .map((candidate) => (
-                                            <Card
-                                                key={candidate.balotaNumber}
-                                                className={`overflow-hidden border-2 hover:shadow-md transition-all ${
-                                                    selectedCandidates.includes(candidate.balotaNumber)
-                                                        ? "border-ph-red bg-red-50"
-                                                        : "border-gray-200"
-                                                }`}
-                                            >
-                                                <CardHeader className="p-3 pb-0 flex flex-row items-start space-y-0 gap-2">
-                                                    <Checkbox
-                                                        id={`candidate-${candidate.balotaNumber}`}
-                                                        checked={selectedCandidates.includes(candidate.balotaNumber)}
-                                                        onCheckedChange={() => handleCandidateToggle(candidate.balotaNumber)}
-                                                        className="data-[state=checked]:bg-ph-red data-[state=checked]:border-ph-red"
-                                                    />
-                                                    <div className="flex-1">
-                                                        <CardTitle className="text-base font-bold flex items-center gap-1">
-                              <span className="bg-ph-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                                {candidate.balotaNumber}
-                              </span>
-                                                            {candidate.lastName}
-                                                        </CardTitle>
-                                                        <p className="text-xs text-gray-500">{candidate.fullName}</p>
-                                                    </div>
-                                                </CardHeader>
-                                                <CardContent className="p-3 pt-2">
-                                                    <div className="flex items-center">
-                                                        <div className="w-12 h-12 rounded-full overflow-hidden mr-2">
-                                                            <img
-                                                                src={candidate.profileLink || "/placeholder.svg"}
-                                                                alt={candidate.fullName}
-                                                                className="w-full h-full object-cover"
-                                                            />
-                                                        </div>
-                                                        <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue text-xs">
-                                                            {candidate.party}
-                                                        </Badge>
-                                                    </div>
-                                                </CardContent>
-                                                <CardFooter className="p-3 pt-0 flex justify-end">
-                                                    <Link
-                                                        href={`/candidates/${candidate.balotaNumber}`}
-                                                        className="text-xs text-ph-blue hover:text-ph-red"
-                                                    >
-                                                        View Profile →
-                                                    </Link>
-                                                </CardFooter>
-                                            </Card>
-                                        ))}
-                                </div>
-                            </TabsContent>
-                        ))}
-
-                        <TabsContent value="others" className="mt-0">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                {candidates
-                                    .filter((candidate) =>
-                                        !candidate.partyList.toUpperCase().includes("IND")
-                                    )
-                                    .map((candidate) => (
+                                    {filteredCandidates.filter(a => a.partyList.includes("IND")).map((candidate) => (
                                         <Card
                                             key={candidate.balotaNumber}
                                             className={`overflow-hidden border-2 hover:shadow-md transition-all ${
@@ -321,9 +300,9 @@ export default function BallotPage() {
                                                 />
                                                 <div className="flex-1">
                                                     <CardTitle className="text-base font-bold flex items-center gap-1">
-                            <span className="bg-ph-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                              {candidate.balotaNumber}
-                            </span>
+                              <span className="bg-ph-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                                {candidate.balotaNumber}
+                              </span>
                                                         {candidate.lastName}
                                                     </CardTitle>
                                                     <p className="text-xs text-gray-500">{candidate.fullName}</p>
@@ -339,7 +318,7 @@ export default function BallotPage() {
                                                         />
                                                     </div>
                                                     <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue text-xs">
-                                                        {candidate.party}
+                                                        {candidate.partyList}
                                                     </Badge>
                                                 </div>
                                             </CardContent>
@@ -353,6 +332,72 @@ export default function BallotPage() {
                                             </CardFooter>
                                         </Card>
                                     ))}
+                                    {filteredCandidates.length === 0 && (
+                                        <div className="col-span-full text-center py-8">
+                                            <p className="text-gray-500">No candidates found matching your search.</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </TabsContent>
+                        ))}
+
+                        <TabsContent value="others" className="mt-0">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                {filteredCandidates.filter(a => !a.partyList.includes("IND")).map((candidate) => (
+                                    <Card
+                                        key={candidate.balotaNumber}
+                                        className={`overflow-hidden border-2 hover:shadow-md transition-all ${
+                                            selectedCandidates.includes(candidate.balotaNumber)
+                                                ? "border-ph-red bg-red-50"
+                                                : "border-gray-200"
+                                        }`}
+                                    >
+                                        <CardHeader className="p-3 pb-0 flex flex-row items-start space-y-0 gap-2">
+                                            <Checkbox
+                                                id={`candidate-${candidate.balotaNumber}`}
+                                                checked={selectedCandidates.includes(candidate.balotaNumber)}
+                                                onCheckedChange={() => handleCandidateToggle(candidate.balotaNumber)}
+                                                className="data-[state=checked]:bg-ph-red data-[state=checked]:border-ph-red"
+                                            />
+                                            <div className="flex-1">
+                                                <CardTitle className="text-base font-bold flex items-center gap-1">
+                            <span className="bg-ph-blue text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                              {candidate.balotaNumber}
+                            </span>
+                                                    {candidate.lastName}
+                                                </CardTitle>
+                                                <p className="text-xs text-gray-500">{candidate.fullName}</p>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent className="p-3 pt-2">
+                                            <div className="flex items-center">
+                                                <div className="w-12 h-12 rounded-full overflow-hidden mr-2">
+                                                    <img
+                                                        src={candidate.profileLink || "/placeholder.svg"}
+                                                        alt={candidate.fullName}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                                <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue text-xs">
+                                                    {candidate.partyList}
+                                                </Badge>
+                                            </div>
+                                        </CardContent>
+                                        <CardFooter className="p-3 pt-0 flex justify-end">
+                                            <Link
+                                                href={`/candidates/${candidate.balotaNumber}`}
+                                                className="text-xs text-ph-blue hover:text-ph-red"
+                                            >
+                                                View Profile →
+                                            </Link>
+                                        </CardFooter>
+                                    </Card>
+                                ))}
+                                {filteredCandidates.filter(a => !a.partyList.includes("IND")).length === 0 && (
+                                    <div className="col-span-full text-center py-8">
+                                        <p className="text-gray-500">No candidates found matching your search.</p>
+                                    </div>
+                                )}
                             </div>
                         </TabsContent>
                     </Tabs>
