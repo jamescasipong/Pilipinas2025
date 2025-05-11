@@ -3,6 +3,7 @@ import { PhFlag } from "@/components/ph-flag"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import { FaLinkedin, FaGithub, FaFacebook } from 'react-icons/fa'; // You can install react-icons if you haven't
 
 export default function AboutPage() {
   return (
@@ -326,16 +327,29 @@ export default function AboutPage() {
                 <Avatar>
                   <AvatarImage src="/profile.jpg" alt="@shadcn" />
                   <AvatarFallback>JC</AvatarFallback>
-                </Avatar>                <div>
+                </Avatar>
+                <div>
                   <p className="text-ph-blue font-semibold">James Casipong</p>
                   <p className="text-gray-600 text-sm">Software Engineer & Founder of PiliPinas 2025</p>
-                  {/*<p className="text-gray-600 mt-2 text-sm">*/}
-                  {/*  Passionate about civic engagement, technology, and empowering voters through accessible, reliable information.*/}
-                  {/*</p>*/}
+                  {/* <p className="text-gray-600 mt-2 text-sm">
+            Passionate about civic engagement, technology, and empowering voters through accessible, reliable information.
+        </p> */}
+                  <div className="flex gap-4 mt-4">
+                    <Link href="https://www.linkedin.com/in/jamescasipong" target="_blank">
+                      <FaLinkedin className="text-blue-600 hover:text-blue-700 text-2xl cursor-pointer" />
+                    </Link>
+                    <Link href="https://github.com/jamescasipong" target="_blank">
+                      <FaGithub className="text-gray-800 hover:text-gray-900 text-2xl cursor-pointer" />
+                    </Link>
+                    <Link href="https://www.facebook.com/casipongjames15" target="_blank">
+                      <FaFacebook className="text-blue-800 hover:text-blue-900 text-2xl cursor-pointer" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             </CardContent>
           </Card>
+
 
 
           <div className="text-center">
