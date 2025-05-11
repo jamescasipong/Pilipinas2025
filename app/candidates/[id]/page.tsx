@@ -150,41 +150,41 @@ export default function CandidateProfilePage() {
                     >
                       Positions
                     </TabsTrigger>
-                    <TabsTrigger
-                      value="achievements"
-                      className="data-[state=active]:bg-ph-yellow data-[state=active]:text-ph-blue"
-                    >
-                      Achievements
-                    </TabsTrigger>
+                    {/*<TabsTrigger*/}
+                    {/*  value="achievements"*/}
+                    {/*  className="data-[state=active]:bg-ph-yellow data-[state=active]:text-ph-blue"*/}
+                    {/*>*/}
+                    {/*  Achievements*/}
+                    {/*</TabsTrigger>*/}
                   </TabsList>
                   <TabsContent value="bio" className="mt-4">
                     <h2 className="text-xl font-bold text-ph-blue mb-3">About {candidate.fullName}</h2>
                     <p className="text-gray-700">{candidate.bio}</p>
 
-                    <h3 className="text-lg font-bold text-ph-red mt-6 mb-3">Key Advocacies</h3>
-                    <ul className="space-y-2">
-                      {candidate.advocacies?.map((advocacy, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <div className="h-5 w-5 rounded-full bg-ph-yellow flex items-center justify-center mt-0.5">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="12"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="3"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              className="text-ph-blue"
-                            >
-                              <path d="M20 6 9 17l-5-5" />
-                            </svg>
-                          </div>
-                          <span>{advocacy}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    {/*<h3 className="text-lg font-bold text-ph-red mt-6 mb-3">Key Advocacies</h3>*/}
+                    {/*<ul className="space-y-2">*/}
+                    {/*  {candidate.advocacies?.map((advocacy, index) => (*/}
+                    {/*    <li key={index} className="flex items-start gap-2">*/}
+                    {/*      <div className="h-5 w-5 rounded-full bg-ph-yellow flex items-center justify-center mt-0.5">*/}
+                    {/*        <svg*/}
+                    {/*          xmlns="http://www.w3.org/2000/svg"*/}
+                    {/*          width="12"*/}
+                    {/*          height="12"*/}
+                    {/*          viewBox="0 0 24 24"*/}
+                    {/*          fill="none"*/}
+                    {/*          stroke="currentColor"*/}
+                    {/*          strokeWidth="3"*/}
+                    {/*          strokeLinecap="round"*/}
+                    {/*          strokeLinejoin="round"*/}
+                    {/*          className="text-ph-blue"*/}
+                    {/*        >*/}
+                    {/*          <path d="M20 6 9 17l-5-5" />*/}
+                    {/*        </svg>*/}
+                    {/*      </div>*/}
+                    {/*      <span>{advocacy}</span>*/}
+                    {/*    </li>*/}
+                    {/*  ))}*/}
+                    {/*</ul>*/}
                   </TabsContent>
                   <TabsContent value="positions" className="mt-4">
                     <h2 className="text-xl font-bold text-ph-blue mb-4">Positions on Key Issues</h2>
@@ -215,37 +215,37 @@ export default function CandidateProfilePage() {
                         ))}
                     </div>
                   </TabsContent>
-                  <TabsContent value="achievements" className="mt-4">
-                    <h2 className="text-xl font-bold text-ph-blue mb-4">Notable Achievements</h2>
-                    <div className="space-y-4">
-                      {candidate.achievements?.map((achievement, index) => (
-                        <Card key={index} className="border-2 border-ph-yellow">
-                          <CardHeader className="py-3 px-4 bg-blue-50">
-                            <CardTitle className="text-base font-medium text-ph-blue flex items-center gap-2">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="text-ph-red"
-                              >
-                                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-                              </svg>
-                              Achievement {index + 1}
-                            </CardTitle>
-                          </CardHeader>
-                          <CardContent className="py-3 px-4">
-                            <p className="text-gray-700">{achievement}</p>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  </TabsContent>
+                  {/*<TabsContent value="achievements" className="mt-4">*/}
+                  {/*  <h2 className="text-xl font-bold text-ph-blue mb-4">Notable Achievements</h2>*/}
+                  {/*  <div className="space-y-4">*/}
+                  {/*    {candidate.achievements?.map((achievement, index) => (*/}
+                  {/*      <Card key={index} className="border-2 border-ph-yellow">*/}
+                  {/*        <CardHeader className="py-3 px-4 bg-blue-50">*/}
+                  {/*          <CardTitle className="text-base font-medium text-ph-blue flex items-center gap-2">*/}
+                  {/*            <svg*/}
+                  {/*              xmlns="http://www.w3.org/2000/svg"*/}
+                  {/*              width="18"*/}
+                  {/*              height="18"*/}
+                  {/*              viewBox="0 0 24 24"*/}
+                  {/*              fill="none"*/}
+                  {/*              stroke="currentColor"*/}
+                  {/*              strokeWidth="2"*/}
+                  {/*              strokeLinecap="round"*/}
+                  {/*              strokeLinejoin="round"*/}
+                  {/*              className="text-ph-red"*/}
+                  {/*            >*/}
+                  {/*              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />*/}
+                  {/*            </svg>*/}
+                  {/*            Achievement {index + 1}*/}
+                  {/*          </CardTitle>*/}
+                  {/*        </CardHeader>*/}
+                  {/*        <CardContent className="py-3 px-4">*/}
+                  {/*          <p className="text-gray-700">{achievement}</p>*/}
+                  {/*        </CardContent>*/}
+                  {/*      </Card>*/}
+                  {/*    ))}*/}
+                  {/*  </div>*/}
+                  {/*</TabsContent>*/}
                 </Tabs>
               </div>
             </div>
