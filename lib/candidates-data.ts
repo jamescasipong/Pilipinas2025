@@ -573,7 +573,8 @@ export function getCandidateById(id: string): Candidate | undefined {
 
 // Get all candidates
 export function getAllCandidates(): Candidate[] {
-  return candidatesData
+  const sortedByBalotaNumber = candidatesData.sort((a, b) => a.balotaNumber - b.balotaNumber)
+  return sortedByBalotaNumber
 }
 
 // Get candidates by party
