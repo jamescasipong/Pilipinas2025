@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { PhFlag } from "@/components/ph-flag"
 
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
@@ -237,8 +238,7 @@ export default function Home() {
             <div>
               <h3 className="text-lg font-semibold mb-4 text-ph-yellow">Disclaimer</h3>
               <p className="text-white/80">
-                This tool is designed to help inform your voting decision, but should not be the only factor in your
-                choice. Always research candidates thoroughly.
+                This tool is designed to assist in your voting decision, but it should not be the sole factor in your choice. Always conduct thorough research on candidates before making your decision. I scrape this data from Rappler, and if you have feedback or additional data to contribute, please send it.
               </p>
             </div>
           </div>

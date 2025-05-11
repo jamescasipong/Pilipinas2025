@@ -9,8 +9,8 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { PhFlag } from "@/components/ph-flag"
 import Link from "next/link"
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import {systemPrompt} from "@/prompts";
-import markdownit from 'markdown-it'
+import { systemPrompt } from "@/prompts"
+
 // Define the Message type
 interface Message {
   id: string;
@@ -19,19 +19,31 @@ interface Message {
 }
 
 export default function ChatbotPage() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "welcome-message",
-      role: "assistant",
-      content:
-          "Mabuhay! I'm your PiliPinas 2025 election assistant powered by Gemini AI. I can help you understand candidate positions, explain political issues, or guide you through the election process. What would you like to know?",
-    },
-  ])
+  const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const md = markdownit()
+
   // Scroll to bottom of messages
+  useEffect(() => {
+    // Load chat history from localStorage
+    const storedMessages = localStorage.getItem("chatHistory")
+    if (storedMessages) {
+      setMessages(JSON.parse(storedMessages))
+    } else {
+      // Add welcome message on first visit if no history is found
+      setMessages([
+        {
+          id: "welcome-message",
+          role: "assistant",
+          content: "Mabuhay! I'm your PiliPinas 2025 election assistant powered by Gemini AI. I can help you understand candidate positions, explain political issues, or guide you through the election process. What would you like to know?",
+        },
+      ])
+    }
+  }, [])
+
+  // Scroll to the latest message
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
@@ -48,13 +60,17 @@ export default function ChatbotPage() {
       content: input,
     }
 
-    setMessages((prev) => [...prev, userMessage])
+    const updatedMessages = [...messages, userMessage]
+    setMessages(updatedMessages)
     setInput("")
     setIsLoading(true)
 
+    // Save the updated messages to localStorage
+    localStorage.setItem("chatHistory", JSON.stringify(updatedMessages))
+
     try {
       // Get API response using direct Gemini API
-      const response = await getGeminiResponse(messages, input)
+      const response = await getGeminiResponse(updatedMessages, input)
 
       // Add assistant message
       const assistantMessage: Message = {
@@ -63,7 +79,11 @@ export default function ChatbotPage() {
         content: response,
       }
 
-      setMessages((prev) => [...prev, assistantMessage])
+      const finalMessages = [...updatedMessages, assistantMessage]
+      setMessages(finalMessages)
+
+      // Save the updated messages to localStorage
+      localStorage.setItem("chatHistory", JSON.stringify(finalMessages))
     } catch (error) {
       console.error("Error generating response:", error)
 
@@ -74,7 +94,11 @@ export default function ChatbotPage() {
         content: "I'm sorry, I encountered an error processing your request. Please try again.",
       }
 
-      setMessages((prev) => [...prev, errorMessage])
+      const finalMessages = [...updatedMessages, errorMessage]
+      setMessages(finalMessages)
+
+      // Save the updated messages to localStorage
+      localStorage.setItem("chatHistory", JSON.stringify(finalMessages))
     } finally {
       setIsLoading(false)
     }
@@ -82,51 +106,40 @@ export default function ChatbotPage() {
 
   // Function to get response from Gemini API
   const getGeminiResponse = async (currentMessages: Message[], userInput: string) => {
-    const ai = new GoogleGenerativeAI(
-        process.env.GEMINI_API_KEY as string || ""
-    );
+    const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string || "")
 
     // Format the conversation history for Gemini
     const formattedMessages = currentMessages.map(msg => ({
       role: msg.role === "user" ? "user" : "model",
-      parts: [{ text: md.render(msg.content) }]
-    }));
+      parts: [{ text: md.render(msg.content) }],
+    }))
 
     // Add the new user input
     formattedMessages.push({
       role: "user",
-      parts: [{ text: userInput }]
-    });
-
-    // System prompt as the first message (Gemini doesn't have a dedicated system prompt field)
+      parts: [{ text: userInput }],
+    })
 
     // Insert the system prompt at the beginning
-    formattedMessages.unshift(systemPrompt);
+    formattedMessages.unshift(systemPrompt)
 
     try {
       // Use the experimental model that has a free tier
       const model = ai.getGenerativeModel({
         model: "models/gemini-2.5-flash-preview-04-17",
-        // generationConfig: {
-        //   candidateCount: 1,
-        //   stopSequences: ["x"],
-        //   maxOutputTokens: 8000,
-        //   temperature: 1.0,
-        // },
-      });
-
+      })
 
       const result = await model.generateContent({
         contents: formattedMessages,
-      });
+      })
 
-      const response = result.response;
-      return response.text();
+      const response = result.response
+      return response.text()
     } catch (error) {
-      console.error('Error calling Gemini API:', error);
-      throw error;
+      console.error("Error calling Gemini API:", error)
+      throw error
     }
-  };
+  }
 
   return (
       <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 py-8 px-4 md:px-6">

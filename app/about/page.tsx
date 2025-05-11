@@ -315,66 +315,27 @@ export default function AboutPage() {
             </Card>
           </div>
 
-          <div className="bg-white rounded-lg border-2 border-ph-yellow shadow-lg overflow-hidden mb-12">
-            <div className="h-2 bg-gradient-to-r from-ph-blue via-ph-red to-ph-yellow w-full"></div>
-            <div className="p-6 md:p-8">
-              <h2 className="text-2xl font-bold text-ph-blue mb-6">Our Team</h2>
-              <p className="text-gray-700 mb-6">
-                PiliPinas 2025 was created by a team of dedicated Filipinos who are passionate about democracy, civic
-                education, and technology. Our team includes:
-              </p>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="flex items-start gap-4">
-                  <div className="h-12 w-12 rounded-full bg-ph-blue flex items-center justify-center text-white font-bold text-xl">
-                    M
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-ph-blue">Maria Santos</h3>
-                    <p className="text-sm text-gray-600 mb-1">Founder & Political Analyst</p>
-                    <p className="text-sm text-gray-700">
-                      Maria has over 15 years of experience in political analysis and civic education.
-                    </p>
-                  </div>
+          <Card className="border-2 border-ph-blue shadow-lg overflow-hidden mb-12">
+            <div className="h-2 bg-ph-yellow w-full"></div>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-xl text-ph-blue">Meet the Creator</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-4">
+                <div className="h-16 w-16 rounded-full bg-ph-blue text-white flex items-center justify-center text-2xl font-bold">
+                  JC
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="h-12 w-12 rounded-full bg-ph-red flex items-center justify-center text-white font-bold text-xl">
-                    J
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-ph-red">Juan Reyes</h3>
-                    <p className="text-sm text-gray-600 mb-1">Technology Director</p>
-                    <p className="text-sm text-gray-700">
-                      Juan leads our technical development with expertise in AI and data science.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="h-12 w-12 rounded-full bg-ph-yellow flex items-center justify-center text-ph-blue font-bold text-xl">
-                    L
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-ph-blue">Liza Mendoza</h3>
-                    <p className="text-sm text-gray-600 mb-1">Research Coordinator</p>
-                    <p className="text-sm text-gray-700">
-                      Liza oversees our research team, ensuring accurate and comprehensive candidate information.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="h-12 w-12 rounded-full bg-ph-blue flex items-center justify-center text-white font-bold text-xl">
-                    R
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-ph-blue">Ramon Diaz</h3>
-                    <p className="text-sm text-gray-600 mb-1">Community Outreach</p>
-                    <p className="text-sm text-gray-700">
-                      Ramon works to bring our platform to communities across the Philippines.
-                    </p>
-                  </div>
+                <div>
+                  <p className="text-ph-blue font-semibold">James Casipong</p>
+                  <p className="text-gray-600 text-sm">Software Engineer & Founder of PiliPinas 2025</p>
+                  {/*<p className="text-gray-600 mt-2 text-sm">*/}
+                  {/*  Passionate about civic engagement, technology, and empowering voters through accessible, reliable information.*/}
+                  {/*</p>*/}
                 </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
+
 
           <div className="text-center">
             <h2 className="text-2xl font-bold text-ph-blue mb-6">Ready to Find Your Candidate Match?</h2>
