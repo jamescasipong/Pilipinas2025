@@ -54,8 +54,8 @@ export default function QuestionnairePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 py-12 px-4 md:px-6">
-      <div className="container mx-auto max-w-3xl">
+    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 py-12 px-0 md:px-6">
+      <div className="container mx-auto sm:max-w-3xl max-w-full">
         <div className="flex items-center justify-center gap-3 mb-8">
           <PhFlag className="h-8 w-8" />
           <Link href="/" className="text-2xl font-bold text-ph-blue">
