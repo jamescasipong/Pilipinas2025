@@ -32,6 +32,11 @@ export default function BallotPage() {
     useEffect(() => {
         setError(null)
         setSuccess(null)
+
+        if (selectedCandidates.length <= 12){
+
+        }
+
     }, [selectedCandidates])
 
     const handleCandidateToggle = (candidateId: string) => {
@@ -41,6 +46,15 @@ export default function BallotPage() {
             } else {
                 // If already selected 12 candidates, show error
                 if (prev.length >= 12) {
+                    toast.info("You can only select up to 12 candidates. Please deselect one before adding another or you could submit your ballot.", {
+                        action: {
+                            label: 'Submit',
+                            onClick: async () => {
+                                await handleSubmit()
+                            }
+                        },
+                    });
+
                     setError("You can only select up to 12 candidates. Please deselect one before adding another.")
                     return prev
                 }
