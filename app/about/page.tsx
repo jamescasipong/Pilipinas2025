@@ -1,40 +1,20 @@
+"use client"
 import Link from "next/link"
 import { PhFlag } from "@/components/ph-flag"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
-import { FaLinkedin, FaGithub, FaFacebook } from 'react-icons/fa'; // You can install react-icons if you haven't
+import { FaLinkedin, FaGithub, FaFacebook } from 'react-icons/fa';
+import Header from "@/components/header";
+import {useState} from "react"; // You can install react-icons if you haven't
 
 export default function AboutPage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
-      <header className="bg-white shadow-md border-b-4 border-ph-red">
-        <div className="container mx-auto py-4 px-4 md:px-6">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <PhFlag className="h-8 w-8" />
-              <Link href="/" className="text-2xl font-bold text-ph-blue">
-                PiliPinas <span className="text-ph-red">2025</span>
-              </Link>
-            </div>
-            <nav className="hidden md:flex space-x-4">
-              <Link href="/" className="text-ph-blue hover:text-ph-red font-medium">
-                Home
-              </Link>
-              <Link href="/about" className="text-ph-red font-medium">
-                About
-              </Link>
-              <Link href="/candidates" className="text-ph-blue hover:text-ph-red font-medium">
-                Candidates
-              </Link>
-              <Link href="/chatbot" className="text-ph-blue hover:text-ph-red font-medium">
-                AI Assistant
-              </Link>
-            </nav>
-            <Button className="md:hidden bg-ph-blue hover:bg-blue-800">Menu</Button>
-          </div>
-        </div>
-      </header>
+      <Header mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen}></Header>
+
 
       <main className="container mx-auto py-12 px-4 md:px-6">
         <div className="max-w-4xl mx-auto">

@@ -13,6 +13,8 @@ import { getAllCandidates } from "@/lib/candidates-data"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getAllParties } from "@/lib/candidates-data"
 import { AlertCircle, CheckCircle2 } from "lucide-react"
+import Header from "@/components/header"
+import {toast} from "sonner";
 
 export default function BallotPage() {
     const router = useRouter()
@@ -21,6 +23,8 @@ export default function BallotPage() {
     const [selectedCandidates, setSelectedCandidates] = useState<string[]>([])
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState<string | null>(null)
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     // Reset error and success messages when selection changes
     useEffect(() => {
@@ -49,7 +53,11 @@ export default function BallotPage() {
             return
         }
 
+
         try {
+            toast.loading("Creating ballot...")
+
+            setLoading(true)
             // Create a JWT token with the selected candidates
             const response = await fetch("/api/ballot/create", {
                 method: "POST",
@@ -67,12 +75,18 @@ export default function BallotPage() {
 
             // Show success message
             setSuccess("Your ballot has been created successfully!")
+            toast.dismiss()
+
 
             // Redirect to the share page with the token
-            setTimeout(() => {
                 router.push(`/ballot/share/${token}`)
-            }, 1500)
+
+            setLoading(false)
         } catch (error) {
+            toast.dismiss()
+            toast.error("An error occurred while creating your ballot. Please try again.")
+            setSuccess(null)
+            setLoading(false)
             setError("An error occurred while creating your ballot. Please try again.")
             console.error(error)
         }
@@ -80,33 +94,7 @@ export default function BallotPage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
-            <header className="bg-white shadow-md border-b-4 border-ph-red">
-                <div className="container mx-auto py-4 px-4 md:px-6">
-                    <div className="flex justify-between items-center">
-                        <div className="flex items-center gap-2">
-                            <PhFlag className="h-8 w-8" />
-                            <Link href="/" className="text-2xl font-bold text-ph-blue">
-                                PiliPinas <span className="text-ph-red">2025</span>
-                            </Link>
-                        </div>
-                        <nav className="hidden md:flex space-x-4">
-                            <Link href="/" className="text-ph-blue hover:text-ph-red font-medium">
-                                Home
-                            </Link>
-                            <Link href="/about" className="text-ph-blue hover:text-ph-red font-medium">
-                                About
-                            </Link>
-                            <Link href="/candidates" className="text-ph-blue hover:text-ph-red font-medium">
-                                Candidates
-                            </Link>
-                            <Link href="/ballot" className="text-ph-red font-medium">
-                                My Ballot
-                            </Link>
-                        </nav>
-                        <Button className="md:hidden bg-ph-blue hover:bg-blue-800">Menu</Button>
-                    </div>
-                </div>
-            </header>
+            <Header></Header>
 
             <main className="container mx-auto py-12 px-4 md:px-6">
                 <div className="max-w-5xl mx-auto">
@@ -142,7 +130,7 @@ export default function BallotPage() {
                             <h2 className="text-xl font-bold text-ph-blue">Selected Candidates: {selectedCandidates.length}/12</h2>
                             <Button
                                 onClick={handleSubmit}
-                                disabled={selectedCandidates.length < 12}
+                                disabled={selectedCandidates.length < 12 || loading}
                                 className="bg-ph-red hover:bg-red-700"
                             >
                                 Generate Ballot
@@ -231,7 +219,7 @@ export default function BallotPage() {
                                                     />
                                                 </div>
                                                 <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue text-xs">
-                                                    {candidate.party}
+                                                    {candidate.partyList}
                                                 </Badge>
                                             </div>
                                         </CardContent>
