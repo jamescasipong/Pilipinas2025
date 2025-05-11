@@ -80,7 +80,7 @@ export default function CandidatesPage() {
                           <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue">
                             {/* Extract party name from partyList */}
                             {candidate.partyList.match(/\(([^)]+)\)/)
-                                ? candidate.partyList.match(/\(([^)]+)\)/)[1]
+                                ? candidate.partyList.includes("IND") ? "Independent" : candidate.partyList.match(/\(([^)]+)\)/)[1]
                                 : candidate.partyList}
                           </Badge>
                         </CardContent>
@@ -119,7 +119,10 @@ export default function CandidatesPage() {
                               </div>
                               <CardContent className="p-3">
                                 <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue">
-                                  {candidate.partyList}
+                                  {/* Extract party name from partyList */}
+                                  {candidate.partyList.match(/\(([^)]+)\)/)
+                                      ? candidate.partyList.includes("IND") ? "Independent" : candidate.partyList.match(/\(([^)]+)\)/)[1]
+                                      : candidate.partyList}
                                 </Badge>
                               </CardContent>
                               <CardFooter className="p-3 pt-0 flex justify-end">
@@ -158,7 +161,10 @@ export default function CandidatesPage() {
                             </div>
                             <CardContent className="p-3">
                               <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue">
-                                {candidate.partyList}
+                                {/* Extract party name from partyList */}
+                                {candidate.partyList.match(/\(([^)]+)\)/)
+                                    ? candidate.partyList.includes("IND") ? "Independent" : candidate.partyList.match(/\(([^)]+)\)/)[1]
+                                    : candidate.partyList}
                               </Badge>
                             </CardContent>
                             <CardFooter className="p-3 pt-0 flex justify-end">

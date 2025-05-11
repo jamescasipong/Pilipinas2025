@@ -126,7 +126,7 @@ export default function CandidateProfilePage() {
                   </div>
                 </div>
                 <h1 className="text-2xl font-bold text-ph-blue text-center">{candidate.fullName}</h1>
-                <Badge className="mt-2 bg-ph-blue text-white">{candidate.party}</Badge>
+                <Badge className="mt-2 bg-ph-blue text-white">{candidate.partyList.includes("IND") ? "Independent" : "Alliance"}</Badge>
                 <div className="mt-6 w-full">
                   <a
                     href={candidate.aboutCandidateLink}
