@@ -9,9 +9,6 @@ export const metadata: Metadata = {
     locale: 'en_IE',
     url: 'https://pilipinas2025.vercel.app/',
   },
-  twitter: {
-    cardType: 'summary_large_image',
-  },
 }
 
 export default function RootLayout({
