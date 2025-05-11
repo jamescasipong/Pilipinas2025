@@ -37,7 +37,41 @@ export default function ChatbotPage() {
         {
           id: "welcome-message",
           role: "assistant",
-          content: "Mabuhay! I'm your PiliPinas 2025 election assistant powered by Gemini AI. I can help you understand candidate positions, explain political issues, or guide you through the election process. What would you like to know?",
+          content: "Mabuhay! I'm your PiliPinas 2025 election assistant created by James Casipong, powered by Gemini AI. I can help you understand candidate positions, explain political issues, or guide you through the election process. Whether you're trying to make an informed vote or simply learning more about the candidates and their platforms, I’m here to assist you every step of the way!\n" +
+              "\n" +
+              "### To get the most accurate and helpful answers:\n" +
+              "\n" +
+              "1. **Be Specific with Your Questions**:\n" +
+              "\n" +
+              "   * Instead of asking, \"Who is the best candidate?\", you can ask, \"What are the key positions of Candidate A on education?\" This helps me provide tailored information about a candidate or issue.\n" +
+              "\n" +
+              "2. **Ask About Platforms, Issues, or Policies**:\n" +
+              "\n" +
+              "   * If you're looking to understand a particular candidate’s stance on an issue, ask for detailed explanations, such as, \"How does Candidate B propose to handle poverty reduction?\" or \"What is Candidate C's position on climate change?\"\n" +
+              "\n" +
+              "3. **Provide Context or Specific Concerns**:\n" +
+              "\n" +
+              "   * If you want to know more about how an issue affects you or your community, mention it! For example, \"What are the candidates' views on healthcare, especially in rural areas?\" or \"How do the candidates plan to address traffic problems in Metro Manila?\"\n" +
+              "\n" +
+              "4. **Compare Candidates**:\n" +
+              "\n" +
+              "   * You can ask me to compare two or more candidates on specific issues, such as, \"How do Candidate X and Candidate Y differ on economic policies?\" This will help you see their positions side-by-side.\n" +
+              "\n" +
+              "5. **Ask About the Election Process**:\n" +
+              "\n" +
+              "   * If you're unsure about the voting system, candidates' eligibility, or even how to register to vote, feel free to ask questions like, \"How do I register to vote for the 2025 elections?\" or \"What is the process for casting my vote during the election?\"\n" +
+              "\n" +
+              "6. **Inquire About Recent Developments**:\n" +
+              "\n" +
+              "   * Keep up with the latest in the election process! Ask, \"What are the latest political events leading up to the 2025 election?\" or \"Has Candidate A been involved in any recent controversies?\"\n" +
+              "\n" +
+              "### Example Questions:\n" +
+              "\n" +
+              "* **\"What is Candidate A’s stance on improving the education system in the Philippines?\"**\n" +
+              "* **\"Can you provide a breakdown of the voting process for the upcoming 2025 elections?\"**\n" +
+              "* **\"How do the candidates plan to address inflation and rising costs of living?\"**\n" +
+              "\n" +
+              "Feel free to ask about anything that will help you make an informed decision or understand the election landscape better! What would you like to dive into today?\n",
         },
       ])
     }
@@ -178,7 +212,41 @@ export default function ChatbotPage() {
                           {
                             id: Date.now().toString(),
                             role: "assistant",
-                            content: "Mabuhay! I'm your PiliPinas 2025 election assistant powered by Gemini AI. I can help you understand candidate positions, explain political issues, or guide you through the election process. What would you like to know?",
+                            content: "Mabuhay! I'm your PiliPinas 2025 election assistant created by James Casipong, powered by Gemini AI. I can help you understand candidate positions, explain political issues, or guide you through the election process. Whether you're trying to make an informed vote or simply learning more about the candidates and their platforms, I’m here to assist you every step of the way!\n" +
+                                "\n" +
+                                "### To get the most accurate and helpful answers:\n" +
+                                "\n" +
+                                "1. **Be Specific with Your Questions**:\n" +
+                                "\n" +
+                                "   * Instead of asking, \"Who is the best candidate?\", you can ask, \"What are the key positions of Candidate A on education?\" This helps me provide tailored information about a candidate or issue.\n" +
+                                "\n" +
+                                "2. **Ask About Platforms, Issues, or Policies**:\n" +
+                                "\n" +
+                                "   * If you're looking to understand a particular candidate’s stance on an issue, ask for detailed explanations, such as, \"How does Candidate B propose to handle poverty reduction?\" or \"What is Candidate C's position on climate change?\"\n" +
+                                "\n" +
+                                "3. **Provide Context or Specific Concerns**:\n" +
+                                "\n" +
+                                "   * If you want to know more about how an issue affects you or your community, mention it! For example, \"What are the candidates' views on healthcare, especially in rural areas?\" or \"How do the candidates plan to address traffic problems in Metro Manila?\"\n" +
+                                "\n" +
+                                "4. **Compare Candidates**:\n" +
+                                "\n" +
+                                "   * You can ask me to compare two or more candidates on specific issues, such as, \"How do Candidate X and Candidate Y differ on economic policies?\" This will help you see their positions side-by-side.\n" +
+                                "\n" +
+                                "5. **Ask About the Election Process**:\n" +
+                                "\n" +
+                                "   * If you're unsure about the voting system, candidates' eligibility, or even how to register to vote, feel free to ask questions like, \"How do I register to vote for the 2025 elections?\" or \"What is the process for casting my vote during the election?\"\n" +
+                                "\n" +
+                                "6. **Inquire About Recent Developments**:\n" +
+                                "\n" +
+                                "   * Keep up with the latest in the election process! Ask, \"What are the latest political events leading up to the 2025 election?\" or \"Has Candidate A been involved in any recent controversies?\"\n" +
+                                "\n" +
+                                "### Example Questions:\n" +
+                                "\n" +
+                                "* **\"What is Candidate A’s stance on improving the education system in the Philippines?\"**\n" +
+                                "* **\"Can you provide a breakdown of the voting process for the upcoming 2025 elections?\"**\n" +
+                                "* **\"How do the candidates plan to address inflation and rising costs of living?\"**\n" +
+                                "\n" +
+                                "Feel free to ask about anything that will help you make an informed decision or understand the election landscape better! What would you like to dive into today?\n",
                           }
                         ])
                         setInput("")
@@ -278,3 +346,87 @@ export default function ChatbotPage() {
       </div>
   )
 }
+
+
+`Got it! So, you're focusing on the **Senate elections** for the upcoming **PiliPinas 2025**. Let's fine-tune that message to reflect this!
+
+---
+
+**Mabuhay! I'm your PiliPinas 2025 Senate election assistant powered by Gemini AI. I can help you understand the positions of Senate candidates, explain key political issues, or guide you through the Senate election process. Whether you want to make an informed vote or simply learn more about the candidates vying for a Senate seat, I’m here to assist you every step of the way!**
+
+### To get the most accurate and helpful answers:
+
+1. **Be Specific with Your Questions**:
+
+   * Instead of asking, "Who is the best Senate candidate?", ask, "What are the main legislative priorities of Candidate A?" or "How does Candidate B plan to improve healthcare in the Philippines?"
+
+2. **Ask About Legislative Platforms and Proposals**:
+
+   * If you're looking to understand a candidate's stance on specific issues that affect the nation, ask something like, "What is Candidate X's position on the SOGIE bill?" or "How does Candidate Y plan to address corruption in government?"
+
+3. **Provide Context About Your Interests**:
+
+   * Let me know if you're particularly concerned about issues that matter to you, like education, healthcare, the environment, or job creation. For example, "What is Candidate Z’s plan for expanding access to quality education?" or "How does Candidate A propose to tackle environmental sustainability?"
+
+4. **Compare Senate Candidates**:
+
+   * You can ask me to compare two or more Senate candidates based on their legislative goals. For example, "How do Candidate A and Candidate B differ on their economic reform proposals?" or "What are the positions of Candidate X and Candidate Y on improving the agriculture sector?"
+
+5. **Ask About the Election Process for Senate**:
+
+   * If you're unsure about how Senate elections work or the registration process, feel free to ask questions like, "How does the voting system for Senate differ from the Presidential elections?" or "What is the process for casting a vote for Senate in the 2025 elections?"
+
+6. **Stay Updated on Candidate Developments**:
+
+   * Keep track of news and any recent changes! Ask questions like, "What are the latest updates on Candidate A’s campaign?" or "Has Candidate B faced any controversies recently?"
+
+### Example Questions:
+
+* **"What are the key legislative proposals of Candidate A for healthcare?"**
+* **"Can you compare the platforms of Candidate B and Candidate C on education reform?"**
+* **"How do the candidates plan to address corruption and strengthen government transparency?"**
+* **"What is the process for voting in the Senate election in 2025?"**
+
+Feel free to ask about anything that will help you make an informed choice or understand the Senate candidates and their platforms better! What would you like to learn more about today?
+
+---
+
+Let me know if you want to dive into any specific Senate candidates or issues, or if you need clarification on any of the election process details!
+`
+
+
+"Mabuhay! I'm your PiliPinas 2025 election assistant created by James Casipong, powered by Gemini AI. I can help you understand candidate positions, explain political issues, or guide you through the election process. Whether you're trying to make an informed vote or simply learning more about the candidates and their platforms, I’m here to assist you every step of the way!\n" +
+"\n" +
+"### To get the most accurate and helpful answers:\n" +
+"\n" +
+"1. **Be Specific with Your Questions**:\n" +
+"\n" +
+"   * Instead of asking, \"Who is the best candidate?\", you can ask, \"What are the key positions of Candidate A on education?\" This helps me provide tailored information about a candidate or issue.\n" +
+"\n" +
+"2. **Ask About Platforms, Issues, or Policies**:\n" +
+"\n" +
+"   * If you're looking to understand a particular candidate’s stance on an issue, ask for detailed explanations, such as, \"How does Candidate B propose to handle poverty reduction?\" or \"What is Candidate C's position on climate change?\"\n" +
+"\n" +
+"3. **Provide Context or Specific Concerns**:\n" +
+"\n" +
+"   * If you want to know more about how an issue affects you or your community, mention it! For example, \"What are the candidates' views on healthcare, especially in rural areas?\" or \"How do the candidates plan to address traffic problems in Metro Manila?\"\n" +
+"\n" +
+"4. **Compare Candidates**:\n" +
+"\n" +
+"   * You can ask me to compare two or more candidates on specific issues, such as, \"How do Candidate X and Candidate Y differ on economic policies?\" This will help you see their positions side-by-side.\n" +
+"\n" +
+"5. **Ask About the Election Process**:\n" +
+"\n" +
+"   * If you're unsure about the voting system, candidates' eligibility, or even how to register to vote, feel free to ask questions like, \"How do I register to vote for the 2025 elections?\" or \"What is the process for casting my vote during the election?\"\n" +
+"\n" +
+"6. **Inquire About Recent Developments**:\n" +
+"\n" +
+"   * Keep up with the latest in the election process! Ask, \"What are the latest political events leading up to the 2025 election?\" or \"Has Candidate A been involved in any recent controversies?\"\n" +
+"\n" +
+"### Example Questions:\n" +
+"\n" +
+"* **\"What is Candidate A’s stance on improving the education system in the Philippines?\"**\n" +
+"* **\"Can you provide a breakdown of the voting process for the upcoming 2025 elections?\"**\n" +
+"* **\"How do the candidates plan to address inflation and rising costs of living?\"**\n" +
+"\n" +
+"Feel free to ask about anything that will help you make an informed decision or understand the election landscape better! What would you like to dive into today?\n"
