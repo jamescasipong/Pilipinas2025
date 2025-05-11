@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+    <!-- Blue rectangle (left half) -->
+    <rect width="12" height="24" fill="#0038A8"/>
+    <!-- Red rectangle (right half) -->
+    <rect x="12" width="12" height="24" fill="#CE1126"/>
+
+    <!-- Yellow sun with rays and stars -->
+    <g fill="#FCD116" transform="translate(12,12) scale(0.75)">
+        <!-- Sun center -->
+        <circle cx="0" cy="0" r="3"/>
+
+        <!-- 8 primary sun rays -->
+        <rect x="-0.5" y="-6" width="1" height="4" transform="rotate(0)"/>
+        <rect x="-0.5" y="-6" width="1" height="4" transform="rotate(45)"/>
+        <rect x="-0.5" y="-6" width="1" height="4" transform="rotate(90)"/>
+        <rect x="-0.5" y="-6" width="1" height="4" transform="rotate(135)"/>
+        <rect x="-0.5" y="-6" width="1" height="4" transform="rotate(180)"/>
+        <rect x="-0.5" y="-6" width="1" height="4" transform="rotate(225)"/>
+        <rect x="-0.5" y="-6" width="1" height="4" transform="rotate(270)"/>
+        <rect x="-0.5" y="-6" width="1" height="4" transform="rotate(315)"/>
+
+        <!-- Three stars representing island groups -->
+        <!-- Luzon star (top) -->
+        <path d="M0,-8 L0.6,-6 L2.8,-6.5 L1.2,-5 L2.4,-3 L0,-4 L-2.4,-3 L-1.2,-5 L-2.8,-6.5 L-0.6,-6 Z"/>
+        <!-- Visayas star (bottom left) -->
+        <path d="M-6,4 L-5.4,6 L-3.2,5.5 L-4.8,7 L-3.6,9 L-6,8 L-8.4,9 L-7.2,7 L-8.8,5.5 L-6.6,6 Z"/>
+        <!-- Mindanao star (bottom right) -->
+        <path d="M6,4 L6.6,6 L8.8,5.5 L7.2,7 L8.4,9 L6,8 L3.6,9 L4.8,7 L3.2,5.5 L5.4,6 Z"/>
+    </g>
+</svg>
