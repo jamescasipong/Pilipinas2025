@@ -80,85 +80,13 @@ export default function CandidatesPage() {
             <TabsContent value="all" className="mt-0">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {candidates.map((candidate) => (
-                  <Link href={`/candidates/${candidate.balotaNumber}`} key={candidate.balotaNumber}>
-                    <Card className="overflow-hidden border-2 border-ph-yellow hover:shadow-lg transition-all hover:-translate-y-1">
-                      <div className="relative">
-                        <img
-                          src={candidate.profileLink || "/placeholder.svg"}
-                          alt={candidate.fullName}
-                          className="w-full h-48 object-cover"
-                        />
-                        <div className="absolute top-2 left-2 bg-ph-red text-white font-bold rounded-full w-8 h-8 flex items-center justify-center">
-                          {candidate.balotaNumber}
-                        </div>
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-                          <h3 className="text-white font-bold">{candidate.lastName}</h3>
-                          <p className="text-white/90 text-sm">{candidate.fullName}</p>
-                        </div>
-                      </div>
-                      <CardContent className="p-3">
-                        <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue">
-                          {candidate.party}
-                        </Badge>
-                      </CardContent>
-                      <CardFooter className="p-3 pt-0 flex justify-end">
-                        <span className="text-xs text-ph-blue font-medium">View Profile →</span>
-                      </CardFooter>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            </TabsContent>
-
-            {parties.slice(0, 5).map((party) => (
-              <TabsContent key={party} value={party} className="mt-0">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {candidates
-                    .filter((candidate) => candidate.party === party)
-                    .map((candidate) => (
-                      <Link href={`/candidates/${candidate.balotaNumber}`} key={candidate.balotaNumber}>
-                        <Card className="overflow-hidden border-2 border-ph-yellow hover:shadow-lg transition-all hover:-translate-y-1">
-                          <div className="relative">
-                            <img
-                              src={candidate.profileLink || "/placeholder.svg"}
-                              alt={candidate.fullName}
-                              className="w-full h-48 object-cover"
-                            />
-                            <div className="absolute top-2 left-2 bg-ph-red text-white font-bold rounded-full w-8 h-8 flex items-center justify-center">
-                              {candidate.balotaNumber}
-                            </div>
-                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
-                              <h3 className="text-white font-bold">{candidate.lastName}</h3>
-                              <p className="text-white/90 text-sm">{candidate.fullName}</p>
-                            </div>
-                          </div>
-                          <CardContent className="p-3">
-                            <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue">
-                              {candidate.party}
-                            </Badge>
-                          </CardContent>
-                          <CardFooter className="p-3 pt-0 flex justify-end">
-                            <span className="text-xs text-ph-blue font-medium">View Profile →</span>
-                          </CardFooter>
-                        </Card>
-                      </Link>
-                    ))}
-                </div>
-              </TabsContent>
-            ))}
-
-            <TabsContent value="others" className="mt-0">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {candidates
-                  .filter((candidate) => !parties.slice(0, 5).includes(candidate.party))
-                  .map((candidate) => (
                     <Link href={`/candidates/${candidate.balotaNumber}`} key={candidate.balotaNumber}>
                       <Card className="overflow-hidden border-2 border-ph-yellow hover:shadow-lg transition-all hover:-translate-y-1">
                         <div className="relative">
                           <img
-                            src={candidate.profileLink || "/placeholder.svg"}
-                            alt={candidate.fullName}
-                            className="w-full h-48 object-cover"
+                              src={candidate.profileLink || "/placeholder.svg"}
+                              alt={candidate.fullName}
+                              className="w-full h-48 object-cover"
                           />
                           <div className="absolute top-2 left-2 bg-ph-red text-white font-bold rounded-full w-8 h-8 flex items-center justify-center">
                             {candidate.balotaNumber}
@@ -170,7 +98,10 @@ export default function CandidatesPage() {
                         </div>
                         <CardContent className="p-3">
                           <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue">
-                            {candidate.party}
+                            {/* Extract party name from partyList */}
+                            {candidate.partyList.match(/\(([^)]+)\)/)
+                                ? candidate.partyList.match(/\(([^)]+)\)/)[1]
+                                : candidate.partyList}
                           </Badge>
                         </CardContent>
                         <CardFooter className="p-3 pt-0 flex justify-end">
@@ -178,7 +109,84 @@ export default function CandidatesPage() {
                         </CardFooter>
                       </Card>
                     </Link>
-                  ))}
+                ))}
+              </div>
+            </TabsContent>
+
+            {parties.slice(0, 5).map((party) => (
+              <TabsContent key={party} value={party} className="mt-0">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {candidates
+                      .filter((candidate) =>
+                          candidate.partyList.includes("IND")
+                      )
+                      .map((candidate) => (
+                          <Link href={`/candidates/${candidate.balotaNumber}`} key={candidate.balotaNumber}>
+                            <Card className="overflow-hidden border-2 border-ph-yellow hover:shadow-lg transition-all hover:-translate-y-1">
+                              <div className="relative">
+                                <img
+                                    src={candidate.profileLink || "/placeholder.svg"}
+                                    alt={candidate.fullName}
+                                    className="w-full h-48 object-cover"
+                                />
+                                <div className="absolute top-2 left-2 bg-ph-red text-white font-bold rounded-full w-8 h-8 flex items-center justify-center">
+                                  {candidate.balotaNumber}
+                                </div>
+                                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                                  <h3 className="text-white font-bold">{candidate.lastName}</h3>
+                                  <p className="text-white/90 text-sm">{candidate.fullName}</p>
+                                </div>
+                              </div>
+                              <CardContent className="p-3">
+                                <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue">
+                                  {candidate.partyList}
+                                </Badge>
+                              </CardContent>
+                              <CardFooter className="p-3 pt-0 flex justify-end">
+                                <span className="text-xs text-ph-blue font-medium">View Profile →</span>
+                              </CardFooter>
+                            </Card>
+                          </Link>
+                      ))}
+
+                </div>
+              </TabsContent>
+            ))}
+
+            <TabsContent value="others" className="mt-0">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {candidates
+                    .filter((candidate) =>
+                         !candidate.partyList.toUpperCase().includes("IND")
+                    )
+                    .map((candidate) => (
+                        <Link href={`/candidates/${candidate.balotaNumber}`} key={candidate.balotaNumber}>
+                          <Card className="overflow-hidden border-2 border-ph-yellow hover:shadow-lg transition-all hover:-translate-y-1">
+                            <div className="relative">
+                              <img
+                                  src={candidate.profileLink || "/placeholder.svg"}
+                                  alt={candidate.fullName}
+                                  className="w-full h-48 object-cover"
+                              />
+                              <div className="absolute top-2 left-2 bg-ph-red text-white font-bold rounded-full w-8 h-8 flex items-center justify-center">
+                                {candidate.balotaNumber}
+                              </div>
+                              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
+                                <h3 className="text-white font-bold">{candidate.lastName}</h3>
+                                <p className="text-white/90 text-sm">{candidate.fullName}</p>
+                              </div>
+                            </div>
+                            <CardContent className="p-3">
+                              <Badge variant="outline" className="bg-blue-50 border-ph-blue text-ph-blue">
+                                {candidate.partyList}
+                              </Badge>
+                            </CardContent>
+                            <CardFooter className="p-3 pt-0 flex justify-end">
+                              <span className="text-xs text-ph-blue font-medium">View Profile →</span>
+                            </CardFooter>
+                          </Card>
+                        </Link>
+                    ))}
               </div>
             </TabsContent>
           </Tabs>
