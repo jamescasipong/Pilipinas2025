@@ -9,11 +9,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useParams } from "next/navigation"
+import Header from "@/components/header";
+import {useState} from "react";
 
 export default function CandidateProfilePage() {
   const params = useParams()
   const id = typeof params.id === "string" ? params.id : Array.isArray(params.id) ? params.id[0] : ""
   const candidate = getCandidateById(id)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
 
   if (!candidate) {
     return (
@@ -62,33 +66,7 @@ export default function CandidateProfilePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
-      <header className="bg-white shadow-md border-b-4 border-ph-red">
-        <div className="container mx-auto py-4 px-4 md:px-6">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <PhFlag className="h-8 w-8" />
-              <Link href="/" className="text-2xl font-bold text-ph-blue">
-                PiliPinas <span className="text-ph-red">2025</span>
-              </Link>
-            </div>
-            <nav className="hidden md:flex space-x-4">
-              <Link href="/" className="text-ph-blue hover:text-ph-red font-medium">
-                Home
-              </Link>
-              <Link href="/about" className="text-ph-blue hover:text-ph-red font-medium">
-                About
-              </Link>
-              <Link href="/candidates" className="text-ph-red font-medium">
-                Candidates
-              </Link>
-              <Link href="/chatbot" className="text-ph-blue hover:text-ph-red font-medium">
-                AI Assistant
-              </Link>
-            </nav>
-            <Button className="md:hidden bg-ph-blue hover:bg-blue-800">Menu</Button>
-          </div>
-        </div>
-      </header>
+      <Header mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen}></Header>
 
       <main className="container mx-auto py-12 px-4 md:px-6">
         <div className="max-w-5xl mx-auto">
