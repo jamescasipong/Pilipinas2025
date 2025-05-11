@@ -236,7 +236,7 @@ export default function BallotSharePage() {
                                     </div>
 
                                     <div className="text-center text-sm text-gray-500">
-                                        <p>This ballot was created using <strong>PiliPinas 2025 Candidate Matcher</strong>.</p>
+                                        <p>This ballot was created using <strong>PiliPinas 2025 Candidate Matcher</strong> at <strong>https://pilipinas2025.vercel.app</strong>.</p>
                                     </div>
                                 </div>
                             </>
