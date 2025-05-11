@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-    <Head>
+    <head>
         {/* Google Analytics script */}
         <script
             async
@@ -36,7 +36,7 @@ export default function RootLayout({
               `,
             }}
         />
-    </Head>
+    </head>
       <body>{children}
       <Toaster />
       </body>
