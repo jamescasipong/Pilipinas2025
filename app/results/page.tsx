@@ -119,7 +119,7 @@ export default function ResultsPage() {
                               : "border-ph-yellow text-gray-800"
                         }`}
                       >
-                        {candidate.party}
+                        {candidate.partyList}
                       </Badge>
                     </div>
                   </div>

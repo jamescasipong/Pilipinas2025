@@ -3,7 +3,6 @@ import Link from "next/link"
 import { getAllCandidates, getAllParties } from "@/lib/candidates-data"
 import { PhFlag } from "@/components/ph-flag"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Header from "@/components/header";
